@@ -98,7 +98,7 @@ public class TestSuite {
 			// Do the test
 			StartTime = System.currentTimeMillis();
 
-			final TestCase aTC = (TestCase) pTestClass.newInstance();
+			final TestCase aTC = (TestCase) pTestClass.getConstructor().newInstance();
 			aTC.setTestSuite(pTS);
 
 			// Do the test
@@ -273,7 +273,7 @@ public class TestSuite {
 			Class<? extends TestSuite> aTestSuite_CallerClass;
 				
 			aTestSuite_CallerClass = Util.GetTestSuite_CallerClass();
-			TestSuite aTestSuite   = aTestSuite_CallerClass.newInstance();
+			TestSuite aTestSuite   = aTestSuite_CallerClass.getConstructor().newInstance();
 			aTestSuite.runTests();
 			
 		} catch (Exception CCE) {

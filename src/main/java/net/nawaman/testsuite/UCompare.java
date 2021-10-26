@@ -289,7 +289,7 @@ final public class UCompare {
 			final Iterator<?> aIterator1,
 			final Iterator<?> aIterator2) {
 		
-		for (int i = 0; aIterator1.hasNext(); i++) {
+		for (; aIterator1.hasNext(); ) {
 			if (aIterator2.hasNext())
 				return false;
 

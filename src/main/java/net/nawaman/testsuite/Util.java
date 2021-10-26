@@ -74,7 +74,7 @@ public class Util {
 		return aString;
 	}
 	
-	/** Returns the string representation of the object */ @SuppressWarnings("unchecked")
+	/** Returns the string representation of the object */
 	static private String Get_toString_Object(
 			final Object          pObj,
 			final HashSet<Object> pObjs) {
@@ -101,13 +101,13 @@ public class Util {
 		}
 		
 		if (pObj instanceof Collection) {
-			final Collection<?> aCollection = (Collection)pObj;
+			final Collection<?> aCollection = (Collection<?>)pObj;
 			final String        aString     = Get_toString_Collection(aCollection, aObjs);
 			return aString;
 		}
 		
 		if (pObj instanceof Map) {
-			final Map<?,?> aMap    = (Map)pObj;
+			final Map<?,?> aMap    = (Map<?, ?>)pObj;
 			final String   aString = Get_toString_Map(aMap, aObjs);
 			return aString;
 		}
@@ -272,12 +272,16 @@ public class Util {
 		try {
 			final String                     aClassName = GetDefaultTestSuiteClassName(pTestCase, pTestSuiteClassName);
 			final Class<? extends TestSuite> aClass     = (Class<? extends TestSuite>)Class.forName(aClassName);
-			final TestSuite                  aTestSuite = aClass.newInstance();
+			final TestSuite                  aTestSuite = aClass.getConstructor().newInstance();
 			return aTestSuite;
 		}
-		catch(final ClassNotFoundException CCE) {}
-		catch(final IllegalAccessException IAE) {}
-		catch(final InstantiationException  IE) {}
+		catch (final ClassNotFoundException CCE) {}
+		catch (final IllegalAccessException IAE) {}
+		catch (final InstantiationException  IE) {}
+		catch (IllegalArgumentException  e) {}
+		catch (InvocationTargetException e) {}
+		catch (NoSuchMethodException     e) {}
+		catch (SecurityException         e) {}
 		return null;
 	}
 	static private String GetDefaultTestSuiteClassName(
@@ -310,11 +314,15 @@ public class Util {
 	static private TestCase InstantiateTestCase(final Class<? extends TestCase> aTestCaseClass) {
 		Exception aException = null;
 		try {
-			final TestCase aTestCase = aTestCaseClass.newInstance();
+			final TestCase aTestCase = aTestCaseClass.getConstructor().newInstance();
 			return aTestCase;
 		}
 		catch (final IllegalAccessException IAE) { aException = IAE; }
 		catch (final InstantiationException IE)  { aException = IE;  }
+        catch (IllegalArgumentException  e) { aException = e; }
+        catch (InvocationTargetException e) { aException = e; }
+        catch (NoSuchMethodException     e) { aException = e; }
+        catch (SecurityException         e) { aException = e; }
 	
 		final String TestCaseInstantiateErrorMessage = "TestSuite: Fail to create an instance of a TestCase.";
 		throw new RuntimeException(TestCaseInstantiateErrorMessage, aException);

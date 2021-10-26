@@ -36,9 +36,9 @@ public class Tests {
 	
 	static private void Test_Asserter() {
 		
-		final Integer aTestInteger1 = new Integer(2000);
-		final Integer aTestInteger2 = new Integer(2000);
-		final Integer aTestInteger3 = new Integer(3000);
+		final Integer aTestInteger1 = Integer.valueOf(2000);
+		final Integer aTestInteger2 = Integer.valueOf(2000);
+		final Integer aTestInteger3 = Integer.valueOf(3000);
 		
 		
 		AssertFailure(new Runnable() { public void run() {
