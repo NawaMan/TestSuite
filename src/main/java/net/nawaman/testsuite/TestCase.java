@@ -64,6 +64,9 @@ abstract public class TestCase {
 	
 	private void doTheTest(final String ... Args) {
 		try     { this.doTest(Args);           }
+		catch (Exception e) {
+		    e.printStackTrace();
+        }
 		finally { this.releaseOutputCapture(); }
 	}
 	private void releaseOutputCapture() {
